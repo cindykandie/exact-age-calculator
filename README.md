@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# Age Calculator
+
+This is a simple age calculator application built with Next.js. Users can input their birth date and calculate their age in years, months, and days by clicking on an arrow icon.
+
+## Features
+
+- Input fields for day, month, and year
+- Calculate age based on the provided birth date
+- Display age in years, months, and days
+- Clean and user-friendly interface
+
+## Screenshots
+
+### Input Birth Date and ### Calculated Age
+
+![Input Birth Date](public/agecalc.png)
+
 
 ## Getting Started
 
-First, run the development server:
+These instructions will help you set up and run the project on your local machine for development and testing purposes.
+
+### Prerequisites
+
+- Node.js
+- npm (or yarn)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/cindykandie/exact-age-calculator.git
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd exact-age-calculator
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+   or
+
+   ```bash
+   yarn install
+   ```
+
+### Running the Application
+
+To start the development server, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+or
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Enter your birth date in the provided input fields (day, month, year).
+2. Click on the arrow icon to calculate your age.
+3. Your age will be displayed in years, months, and days.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Code Overview
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `src/app/page.js`: Main page component containing the input fields and the logic to calculate and display the age.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Please open an issue or submit a pull request for any bugs or enhancements.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- Thanks to the Next.js team for creating an awesome framework.
