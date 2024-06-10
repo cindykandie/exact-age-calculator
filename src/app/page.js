@@ -1,113 +1,111 @@
-import Image from "next/image";
+'use client'
+import { useState } from 'react';
 
 export default function Home() {
+  // State variables to manage input values for day, month, year and calculated age
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+  const [age, setAge] = useState({ years: '--', months: '--', days: '--' });
+
+  // Function to calculate age based on input date
+  const calculateAge = () => {
+    // Create a Date object for the birth date based on input values
+    const birthDate = new Date(`${year}-${month}-${day}`);
+    // Get today's date
+    const today = new Date();
+
+    // Calculate age in years, months, and days
+    let ageYears = today.getFullYear() - birthDate.getFullYear();
+    let ageMonths = today.getMonth() - birthDate.getMonth();
+    let ageDays = today.getDate() - birthDate.getDate();
+
+    // Adjust for negative days (borrow days from the previous month)
+    if (ageDays < 0) {
+      ageMonths -= 1;
+      ageDays += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    }
+
+    // Adjust for negative months (borrow months from the previous year)
+    if (ageMonths < 0) {
+      ageYears -= 1;
+      ageMonths += 12;
+    }
+
+    // Set the calculated age in the state
+    setAge({
+      years: ageYears,
+      months: ageMonths,
+      days: ageDays,
+    });
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <main className="rounded-br-[100px] rounded-lg max-w-[450px] m-4 p-6 bg-[#ffffff] mx-auto mt-16 ">
+      <section className="mb-10">
+        {/* Form to input day, month, and year */}
+        <div className="flex gap-4 my-4 mx-6 relative">
+          <div>
+            <label htmlFor="day">DAY</label> <br />
+            <input
+              className="border rounded-lg w-24 p-2"
+              type="text"
+              id="day"
+              name="day"
+              placeholder="DD"
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
             />
-          </a>
+          </div>
+          <div>
+            <label htmlFor="month">MONTH</label>
+            <br />
+            <input
+              className="border rounded-lg w-24 p-2"
+              type="text"
+              id="month"
+              name="month"
+              placeholder="MM"
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="year">YEAR</label>
+            <br />
+            <input
+              className="border rounded-lg w-24 p-2"
+              type="text"
+              id="year"
+              name="year"
+              placeholder="YYYY"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
+          {/* Image to trigger the age calculation */}
+          <img 
+            className='bg-[#854dff] rounded-full w-12 h-12 p-2 cursor-pointer absolute left-[320px] top-[80px]'
+            src="/icon-arrow.svg"
+            alt="Calculate"
+            onClick={calculateAge}
+          />
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </section>
+      <hr />
+      <section className="m-6 pl-6">
+        {/* Display the calculated age */}
+        <p className="text-5xl font-extrabold italic">
+          <span className="text-[#854dff]">{age.years}</span> years
+        </p>
+        <p className="text-5xl font-extrabold italic">
+          <span className="text-[#854dff]">{age.months}</span> months
+        </p>
+        <p className="text-5xl font-extrabold italic">
+          <span className="text-[#854dff]">{age.days}</span> days
+        </p>
+      </section>
     </main>
   );
 }
