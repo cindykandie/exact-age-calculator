@@ -7,9 +7,35 @@ export default function Home() {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [age, setAge] = useState({ years: '--', months: '--', days: '--' });
+  const [errors, setErrors] = useState({ day: false, month: false, year: false });
 
   // Function to calculate age based on input date
   const calculateAge = () => {
+    // Validate inputs
+    let hasError = false;
+    let newErrors = { day: false, month: false, year: false };
+
+    if (!day) {
+      newErrors.day = true;
+      hasError = true;
+    }
+    if (!month) {
+      newErrors.month = true;
+      hasError = true;
+    }
+    if (!year) {
+      newErrors.year = true;
+      hasError = true;
+    }
+
+    if (hasError) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Reset errors if inputs are valid
+    setErrors({ day: false, month: false, year: false });
+
     // Create a Date object for the birth date based on input values
     const birthDate = new Date(`${year}-${month}-${day}`);
     // Get today's date
@@ -40,6 +66,14 @@ export default function Home() {
     });
   };
 
+  // Function to handle input change and ensure only numeric values are entered
+  const handleInputChange = (e, setState) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setState(value);
+    }
+  };
+
   return (
     <main className="rounded-br-[100px] rounded-lg max-w-[450px] m-4 p-6 bg-[#ffffff] mx-auto mt-16 ">
       <section className="mb-10">
@@ -48,41 +82,47 @@ export default function Home() {
           <div>
             <label htmlFor="day">DAY</label> <br />
             <input
-              className="border rounded-lg w-24 p-2"
+              className={`border rounded-lg w-24 p-2 ${errors.day ? 'border-red-500' : ''}`}
               type="text"
               id="day"
               name="day"
               placeholder="DD"
               value={day}
-              onChange={(e) => setDay(e.target.value)}
+              onChange={(e) => handleInputChange(e, setDay)}
+              required
             />
+            {errors.day && <p className="text-red-500">*required</p>}
           </div>
           <div>
             <label htmlFor="month">MONTH</label>
             <br />
             <input
-              className="border rounded-lg w-24 p-2"
+              className={`border rounded-lg w-24 p-2 ${errors.month ? 'border-red-500' : ''}`}
               type="text"
               id="month"
               name="month"
               placeholder="MM"
               value={month}
-              onChange={(e) => setMonth(e.target.value)}
+              onChange={(e) => handleInputChange(e, setMonth)}
+              required
             />
+            {errors.month && <p className="text-red-500">*required</p>}
           </div>
 
           <div>
             <label htmlFor="year">YEAR</label>
             <br />
             <input
-              className="border rounded-lg w-24 p-2"
+              className={`border rounded-lg w-24 p-2 ${errors.year ? 'border-red-500' : ''}`}
               type="text"
               id="year"
               name="year"
               placeholder="YYYY"
               value={year}
-              onChange={(e) => setYear(e.target.value)}
+              onChange={(e) => handleInputChange(e, setYear)}
+              required
             />
+            {errors.year && <p className="text-red-500">*required</p>}
           </div>
           {/* Image to trigger the age calculation */}
           <img 
